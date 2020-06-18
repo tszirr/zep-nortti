@@ -565,7 +565,7 @@ void ZepMode::Redo()
     if (m_redoStack.empty())
         return;
 
-    if (std::dynamic_pointer_cast<ZepCommand_GroupMarker>(m_redoStack.top()) != nullptr)
+    if (m_redoStack.top()->markerType() == ZepCommand::MarkerType::Group)
     {
         m_undoStack.push(m_redoStack.top());
         m_redoStack.pop();
@@ -584,7 +584,7 @@ void ZepMode::Redo()
         m_undoStack.push(spCommand);
         m_redoStack.pop();
 
-        if (std::dynamic_pointer_cast<ZepCommand_GroupMarker>(spCommand) != nullptr)
+        if (spCommand->markerType() == ZepCommand::MarkerType::Group)
         {
             break;
         }
@@ -601,7 +601,7 @@ void ZepMode::Undo()
     if (m_undoStack.empty())
         return;
 
-    if (std::dynamic_pointer_cast<ZepCommand_GroupMarker>(m_undoStack.top()) != nullptr)
+    if (m_undoStack.top()->markerType() == ZepCommand::MarkerType::Group)
     {
         m_redoStack.push(m_undoStack.top());
         m_undoStack.pop();
@@ -620,7 +620,7 @@ void ZepMode::Undo()
         m_redoStack.push(spCommand);
         m_undoStack.pop();
 
-        if (std::dynamic_pointer_cast<ZepCommand_GroupMarker>(spCommand) != nullptr)
+        if (spCommand->markerType() == ZepCommand::MarkerType::Group)
         {
             break;
         }

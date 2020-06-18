@@ -198,7 +198,7 @@ void ZepWindow::Notify(std::shared_ptr<ZepMessage> payload)
     {
         if (payload->pComponent == m_vScroller.get())
         {
-            auto pScroller = dynamic_cast<Scroller*>(payload->pComponent);
+            auto pScroller = static_cast<Scroller*>(payload->pComponent);
             m_textOffsetPx = pScroller->vScrollPosition * m_textSizePx.y;
             UpdateVisibleLineRange();
             EnsureCursorVisible();

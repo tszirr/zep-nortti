@@ -31,6 +31,9 @@ public:
         return m_cursorBefore;
     }
 
+    enum class MarkerType { None, Group, EndGroup };
+    virtual MarkerType markerType() const { return MarkerType::None; }
+
 protected:
     ZepBuffer& m_buffer;
     ByteIndex m_cursorBefore = -1;
@@ -43,6 +46,8 @@ public:
     ZepCommand_GroupMarker(ZepBuffer& currentMode) : ZepCommand(currentMode) {}
     virtual void Redo() override {};
     virtual void Undo() override {};
+
+    MarkerType markerType() const override { return MarkerType::Group; }
 };
 
 class ZepCommand_EndGroup : public ZepCommand
@@ -51,6 +56,8 @@ public:
     ZepCommand_EndGroup(ZepBuffer& currentMode) : ZepCommand(currentMode) {}
     virtual void Redo() override {};
     virtual void Undo() override {};
+
+    MarkerType markerType() const override { return MarkerType::EndGroup; }
 };
 
 class ZepCommand_DeleteRange : public ZepCommand
