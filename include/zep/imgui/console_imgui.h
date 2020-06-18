@@ -33,7 +33,7 @@ struct ZepConsole : Zep::IZepComponent
     {
         zepEditor.RegisterCallback(this);
         auto pBuffer = zepEditor.GetEmptyBuffer("Log");
-        pBuffer->SetFlags(Zep::FileFlags::ReadOnly);
+        pBuffer->SetFileFlags(Zep::FileFlags::ReadOnly);
     }
 
     void AddLog(const char* fmt, ...) IM_FMTARGS(2)
