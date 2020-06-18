@@ -8,7 +8,9 @@
 #include "zep/tab_window.h"
 #include "zep/indexer.h"
 
+#ifndef ZEP_SINGLE_HEADER_BUILD
 #include "config_app.h"
+#endif
 
 namespace Zep
 {
