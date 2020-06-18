@@ -60,7 +60,9 @@ ZepEditor::ZepEditor(ZepDisplay* pDisplay, const ZepPath& root, uint32_t flags, 
         m_threadPool = std::make_unique<ThreadPool>();
     }
 
+#ifdef ZEP_FEATURE_TOML_CONFIG
     LoadConfig(root / "zep.cfg");
+#endif
 
     m_spTheme = std::make_shared<ZepTheme>();
 
@@ -112,14 +114,17 @@ ThreadPool& ZepEditor::GetThreadPool() const
 
 void ZepEditor::OnFileChanged(const ZepPath& path)
 {
+#ifdef ZEP_FEATURE_TOML_CONFIG
     if (path.filename() == "zep.cfg")
     {
         LOG(INFO) << "Reloading config";
         LoadConfig(path);
         Broadcast(std::make_shared<ZepMessage>(Msg::ConfigChanged));
     }
+#endif
 }
 
+#ifdef ZEP_FEATURE_TOML_CONFIG
 // If you pass a valid path to a 'zep.cfg' file, then editor settings will serialize from that
 // You can even edit it inside zep for immediate changes :)
 void ZepEditor::LoadConfig(const ZepPath& config_path)
@@ -217,6 +222,7 @@ void ZepEditor::SaveConfig(std::shared_ptr<cpptoml::table> spConfig)
     writer.visit(*spConfig);
     */
 }
+#endif
 
 void ZepEditor::SaveBuffer(ZepBuffer& buffer)
 {

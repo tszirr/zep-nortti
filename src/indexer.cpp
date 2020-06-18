@@ -53,6 +53,7 @@ void Indexer::GetSearchPaths(ZepEditor& editor, const ZepPath& path, std::vector
 {
     ZepPath config = path / ".zep" / "project.cfg";
 
+#ifdef ZEP_FEATURE_TOML_CONFIG
     if (editor.GetFileSystem().Exists(config))
     {
         try
@@ -77,7 +78,7 @@ void Indexer::GetSearchPaths(ZepEditor& editor, const ZepPath& path, std::vector
             errors = str.str();
         }
     }
-
+#endif
     if (ignore_patterns.empty())
     {
         ignore_patterns = {

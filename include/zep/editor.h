@@ -13,7 +13,9 @@
 #include "zep/mcommon/animation/timer.h"
 #include "zep/mcommon/threadpool.h"
 #include "zep/mcommon/file/path.h"
+#ifdef ZEP_FEATURE_TOML_CONFIG
 #include "zep/mcommon/file/cpptoml.h"
+#endif
 
 #include "zep/keymap.h"
 
@@ -252,9 +254,11 @@ public:
     ZepEditor(ZepDisplay* pDisplay, const ZepPath& root, uint32_t flags = 0, IZepFileSystem* pFileSystem = nullptr);
     ~ZepEditor();
 
+#ifdef ZEP_FEATURE_TOML_CONFIG
     void LoadConfig(const ZepPath& config_path);
     void LoadConfig(std::shared_ptr<cpptoml::table> spConfig);
     void SaveConfig(std::shared_ptr<cpptoml::table> spConfig);
+#endif
     void RequestQuit();
 
     void Reset();
